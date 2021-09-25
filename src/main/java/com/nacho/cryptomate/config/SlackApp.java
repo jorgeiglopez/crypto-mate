@@ -1,4 +1,4 @@
-package com.nacho.cryptomate;
+package com.nacho.cryptomate.config;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
