@@ -1,0 +1,14 @@
+plugins {
+    id("application")
+}
+repositories {
+    mavenCentral()
+}
+dependencies {
+    implementation("com.slack.api:bolt:1.12.1")
+    implementation("com.slack.api:bolt-jetty:1.12.1")
+    implementation("org.slf4j:slf4j-simple:1.7.32")
+}
+application {
+    mainClassName = "com.nacho.cryptomate.MyApp"
+}
