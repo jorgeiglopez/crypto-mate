@@ -3,8 +3,10 @@ package com.nacho.cryptomate.config;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.nacho.cryptomate.helper.PriceFetcher;
 import com.slack.api.bolt.App;
 import com.slack.api.bolt.AppConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,6 +19,9 @@ import static java.util.stream.Collectors.joining;
 
 @Configuration
 public class SlackApp {
+
+    @Autowired
+    PriceFetcher priceFetcher;
 
     @Bean
     public AppConfig loadAppConfig() {
@@ -39,7 +44,7 @@ public class SlackApp {
     public App initSlackApp(AppConfig config) {
         App app = new App(config);
         app.command("/hello", (req, ctx) -> ctx.ack(r -> r.text("Hi there, welcome to Crypto-Mate! For the latest prices type in: '/crypto' ")));
-        app.command("/crypto", (req, ctx) -> ctx.ack(r -> r.text("The current price is: EXPENSIVE!")));
+        app.command("/crypto", (req, ctx) -> ctx.ack(r -> r.text(priceFetcher.getAllPrices("USD"))));
         return app;
     }
 }

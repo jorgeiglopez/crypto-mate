@@ -19,13 +19,19 @@ public class PriceFetcher {
 
     ObjectMapper objectMapper = new ObjectMapper();
 
-    public String getAllPrices(String currency) throws JsonProcessingException {
+    public String getAllPrices(String currency) {
         final String URL = "https://api.coinstats.app/public/v1/coins?skip=0&limit=10&currency=" + currency;
 
         String response = restTemplate.getForEntity(URL, String.class).getBody();
-        CoinListDTO root = objectMapper.readValue(response, CoinListDTO.class);
+        CoinListDTO root = null;
+        try {
+            root = objectMapper.readValue(response, CoinListDTO.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return "Error occurred";
+        }
         return root.getCoinDTOS().stream()
                 .map(coin -> String.format("%s(%s): $%.2f %s", coin.getName(), coin.getSymbol(), coin.getPrice(), currency))
-                .collect(Collectors.joining("<br />"));
+                .collect(Collectors.joining("\n"));
     }
 }
