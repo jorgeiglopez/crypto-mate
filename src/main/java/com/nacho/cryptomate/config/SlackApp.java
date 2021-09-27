@@ -3,10 +3,9 @@ package com.nacho.cryptomate.config;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.nacho.cryptomate.helper.PriceFetcher;
 import com.slack.api.bolt.App;
 import com.slack.api.bolt.AppConfig;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,11 +16,10 @@ import java.io.InputStreamReader;
 
 import static java.util.stream.Collectors.joining;
 
+
+@Slf4j
 @Configuration
 public class SlackApp {
-
-    @Autowired
-    PriceFetcher priceFetcher;
 
     @Bean
     public AppConfig loadAppConfig() {
@@ -34,8 +32,7 @@ public class SlackApp {
             config.setSigningSecret(j.get("signingSecret").getAsString());
             config.setSingleTeamBotToken(j.get("singleTeamBotToken").getAsString());
         } catch (IOException e) {
-            System.out.println("------------------------ UPS, AN EXCEPTION!!! ------------------------");
-            System.out.println(e.getMessage());
+            log.error("Error reading 'appConfig.json': {}", e.getMessage());
         }
         return config;
     }
@@ -43,8 +40,6 @@ public class SlackApp {
     @Bean
     public App initSlackApp(AppConfig config) {
         App app = new App(config);
-        app.command("/hello", (req, ctx) -> ctx.ack(r -> r.text("Hi there, welcome to Crypto-Mate! For the latest prices type in: '/crypto' ")));
-        app.command("/crypto", (req, ctx) -> ctx.ack(r -> r.text(priceFetcher.getAllPrices("USD"))));
         return app;
     }
 }

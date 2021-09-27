@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/crypto")
-public class PriceHandler {
+public class PriceEndpoint {
 
     @Autowired
     PriceFetcher priceFetcher;
