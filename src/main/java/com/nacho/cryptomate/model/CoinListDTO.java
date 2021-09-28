@@ -11,6 +11,7 @@ import java.util.List;
 @Builder
 @JsonDeserialize(builder = CoinListDTO.CoinListDTOBuilder.class)
 public class CoinListDTO {
+
     @JsonProperty("coins")
     public List<CoinDTO> coinDTOS;
 }

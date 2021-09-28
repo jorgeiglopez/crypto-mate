@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SlackCommandHandler { // SLASH COMMANDS
+public class SlackCommandHandler {
 
     @Autowired
     App app;
@@ -14,7 +14,7 @@ public class SlackCommandHandler { // SLASH COMMANDS
     @Autowired
     PriceFetcher priceFetcher;
 
-    public void initHandler(){
+    public void initHandler() {
 
         app.command("/hello", (req, ctx) ->
                 ctx.ack(r -> r.text("Hi there, welcome to Crypto-Mate! For the latest prices type in: '/crypto' ")));

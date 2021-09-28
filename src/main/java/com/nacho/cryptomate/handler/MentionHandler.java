@@ -11,7 +11,7 @@ public class MentionHandler { // EVENT SUBSCRIPTION
     @Autowired
     App app;
 
-    public void initHandler(){
+    public void initHandler() {
         app.event(AppMentionEvent.class, (payload, ctx) -> {
             ctx.say("What's up?"); // doesn't work for DM, only channels that it's a member
             return ctx.ack();

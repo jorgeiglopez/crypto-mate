@@ -1,9 +1,6 @@
 package com.nacho.cryptomate;
 
-import com.nacho.cryptomate.handler.AppHomeHandler;
-import com.nacho.cryptomate.handler.MentionHandler;
-import com.nacho.cryptomate.handler.MiddlemanDebugHandler;
-import com.nacho.cryptomate.handler.SlackCommandHandler;
+import com.nacho.cryptomate.handler.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -27,17 +24,19 @@ public class CryptomateApplication {
     @Autowired
     private SlackCommandHandler commandHandler;
 
+    @Autowired
+    private GlobalShortcutHandler globalShortcutHandler;
 
-	public static void main(String[] args) {
-		SpringApplication.run(CryptomateApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(CryptomateApplication.class, args);
+    }
 
-
-	@EventListener(ApplicationReadyEvent.class)
-    public void init(){
-	    appHomeHandler.initHandler();
-	    mentionHandler.initHandler();
-	    debugHandler.initHandler();
-	    commandHandler.initHandler();
+    @EventListener(ApplicationReadyEvent.class)
+    public void init() {
+        appHomeHandler.initHandler();
+        mentionHandler.initHandler();
+        debugHandler.initHandler();
+        commandHandler.initHandler();
+        globalShortcutHandler.initHandler();
     }
 }

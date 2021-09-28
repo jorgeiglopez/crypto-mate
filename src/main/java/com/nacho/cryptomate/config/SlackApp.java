@@ -16,7 +16,6 @@ import java.io.InputStreamReader;
 
 import static java.util.stream.Collectors.joining;
 
-
 @Slf4j
 @Configuration
 public class SlackApp {
